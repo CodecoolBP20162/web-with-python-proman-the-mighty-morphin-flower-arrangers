@@ -1,0 +1,43 @@
+
+.container {
+
+}
+
+.row {
+	display: inline-block;
+}
+
+.card {
+	display: inline-block;
+	vertical-align: top;
+	min-height: 50px; 
+	background: #888;
+	width: 300px;
+	margin-right: 10px;
+	padding: 10px;
+}
+
+.card_header {
+	padding-left: 10px;
+	color: white;
+}
+
+.task {
+	height: 100px;
+	background: blue;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+
+.add_task {
+	width: 60px;
+	padding: 10px;
+	margin-top: 10px;
+	border-radius: 5px;
+	background: red;
+}
+
+.create_new {
+	display: inline-block;
+	vertical-align: top;
+}
