@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Proman</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 	<script src="static/js/main.js"></script>
 </head>
+
 <body>
 	<h1>The Mighty Morphin Flower Arrangers</h1>
-	
+
 	<div class="container">
-		
+
 		<div class="row">
 			<div class="card">
 				<div class="card_header">
 					<p id="todo" contenteditable>To do</p>
 				</div>
 				<div class="card_content drag_container" id="card_content">
-					<div class="task" id="task"></div>
+					<div class="task" id="task">
+						<p>blabla</p>
+					</div>
 				</div>
 				<p class="add_task" id="add_task">add task</p>
 			</div>
 		</div>
-	
+
 
 		<div class="create_new">
-			<button>create new card</button>
+			<p>create new card
+				<p>
 		</div>
 
 	</div>
-	
+
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script>
 </body>
+
 </html>
-
-
-
-
-
-
-
