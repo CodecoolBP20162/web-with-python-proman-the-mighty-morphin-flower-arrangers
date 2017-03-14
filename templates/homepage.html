@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trello Alter</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="static/js/home.js"></script>
+<body>
+	<h1>The Mighty Morphin Flower Arrangers</h1>  
+
+    <div class="container">
+		
+		<div class="row">
+            <div class='board'>
+                <div class='board_header'>
+                    <p id='title' contenteditable='true' onclick='$(this).focus();'>Title</p>
+                </div>
+                <div class='board_content' id='board_content'>
+                </div> 
+                <p class='add_task' id='team'>Team</p>
+             <a href='{{url_for("index")}}'>     
+            </div>
+            </a>
+			<div class="board">
+				<div class="board_header">  
+                    <div class="create_new">
+                        <p id="create">Create New Board</p>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script>
+    </div>                
+
+        
+        
