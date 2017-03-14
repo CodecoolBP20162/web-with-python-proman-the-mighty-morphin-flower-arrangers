@@ -1,5 +1,8 @@
 
 $( document ).ready(function() {
+	$(".initial").show(300);
+
+	var ListNames = []
 
 	
 	var card = "<div class='card'><div class='card_header'><p id='todo'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
@@ -30,5 +33,46 @@ $( document ).ready(function() {
 		});
 	}
 	*/
+
+	function proman_list(id, title, order, cards){
+		this.id = id;
+		this.title = title;
+		this.order = order;
+		this.cards = cards;
+
+		this.save_as_json = function(name){
+			localStorage.setItem(name, JSON.stringify(this));
+			ListNames.push(name);
+			console.log(ListNames);
+		}
+	}
+
+	var List1 = new proman_list("list1", "asd", 1, ["todo1", "todo2", "todo3"]);
+	localStorage.setItem("List1",JSON.stringify(List1));
+	var list1 = JSON.parse(localStorage.getItem("List1"));
+	List1.save_as_json("list1");
+
+
+	/*
+	var Lists = {
+
+		"List1" : {
+
+			"title" : '',
+			"order" : 1,
+			"cards" : ["todo 1", "todo 2", "todo3"]
+		},
+
+		"List2" : {
+
+			"title" : '',
+			"order" : 1,
+			"cards" : ["todo 1", "todo 2", "todo3"]
+		}
+	}
+	*/
+
+
+
 });
 
