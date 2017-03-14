@@ -2,6 +2,7 @@
 $(document).ready(function () {
     $(".initial").show(300);
 
+
     var ListNames = []
 
 
@@ -33,6 +34,7 @@ $(document).ready(function () {
 		});
 	}
 	*/
+
 
     function proman_list(id, title, order, cards) {
         this.id = id;
@@ -78,6 +80,7 @@ $(document).ready(function () {
         }
 
     }
+
 });
 	/*
 	var Lists = {
