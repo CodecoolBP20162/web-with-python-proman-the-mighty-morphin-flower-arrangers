@@ -1,5 +1,5 @@
 
-$(document).ready(function() {
+$(document).ready(function () {
     $(".initial").show(300);
 
     var ListNames = []
@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     var card = "<div class='card'><div class='card_header'><p id='todo'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
 
-    $(document.body).on("click", ".add_task", function(e) {
+    $(document.body).on("click", ".add_task", function (e) {
         var $x = $(e.target);
         console.log($x.parent());
         $list = $x.prev();
@@ -16,7 +16,7 @@ $(document).ready(function() {
     })
 
 
-    $(".create_new").click(function() {
+    $(".create_new").click(function () {
         $(".row").append(card);
         //save();
     })
@@ -40,12 +40,22 @@ $(document).ready(function() {
         this.order = order;
         this.cards = cards;
 
-        this.save_as_json = function(name) {
+        this.save_as_json = function (name) {
             localStorage.setItem(name, JSON.stringify(this));
             ListNames.push(name);
             console.log(ListNames);
         }
     }
+
+    function board(title) {
+        this.title = title
+
+        this.save_as_json = function (name) {
+            localStorage.setItem(name, JSON.stringify(this));
+        }
+    }
+
+
 
     var List1 = new proman_list("list1", "asd", 1, ["todo1", "todo2", "todo3"]);
     localStorage.setItem("List1", JSON.stringify(List1));
@@ -55,7 +65,7 @@ $(document).ready(function() {
     list_obj.push(List1);
     localStorage.setItem("obj_list", JSON.stringify(list_obj));
 
-    var getCards = function() {
+    var getCards = function () {
         var data = JSON.parse(localStorage.getItem("obj_list"));
         console.log(data);
         for (var i = 0; i < data.length; i++) {
@@ -68,7 +78,6 @@ $(document).ready(function() {
         }
 
     }
-    getCards();
 });
 	/*
 	var Lists = {
