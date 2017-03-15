@@ -1,18 +1,18 @@
 
 $( document ).ready(function() {
-	$(".initial").show(300);
-
-	var ListNames = []
 
 	
-	var card = "<div class='card'><div class='card_header'><p id='todo'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
+	var card = "<div class='card'><div class='card_header'><p class='title'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
 
 	$(document.body).on("click", ".add_task", function(e){
 		var $x = $(e.target);
-		console.log($x.parent());
+		//console.log($x.parent());
 		$list = $x.prev();
-		console.log($list);
-		$list.append("<div class='task'>" + Math.floor((Math.random() * 10) + 1) + "</div>");
+		//console.log($list);
+		var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).focus();'>task " + Math.floor((Math.random() * 10) + 1) + "</p></div>"
+		$list.append(new_item);
+		save_cards();
+		
 	})
 
 
@@ -21,7 +21,10 @@ $( document ).ready(function() {
 		//save();
 	})
 
-	dragula([document.querySelector('.card_content')], { staticClass: 'static', animation: 300 });
+	dragula([document.querySelector('.card_content')], { staticClass: 'static', animation: 300 })
+	.on('drop', function(){
+		save_cards();
+	});
 	
 
 	/*
@@ -34,10 +37,8 @@ $( document ).ready(function() {
 	}
 	*/
 
-	function proman_list(id, title, order, cards){
-		this.id = id;
+	function proman_list(title, cards){
 		this.title = title;
-		this.order = order;
 		this.cards = cards;
 
 		this.save_as_json = function(name){
@@ -47,32 +48,42 @@ $( document ).ready(function() {
 		}
 	}
 
-	var List1 = new proman_list("list1", "asd", 1, ["todo1", "todo2", "todo3"]);
-	localStorage.setItem("List1",JSON.stringify(List1));
-	var list1 = JSON.parse(localStorage.getItem("List1"));
-	List1.save_as_json("list1");
 
+	function save_cards(){
 
-	/*
-	var Lists = {
+		var obj_list = [];
 
-		"List1" : {
+		$(".card").each(function(){
+			var cards = [];
+			var title = $(this).find(".title").text();
+			$(this).find(".task").each(function(){
+				cards.push($(this).text());
+			});
 
-			"title" : '',
-			"order" : 1,
-			"cards" : ["todo 1", "todo 2", "todo3"]
-		},
+			var card_obj = new proman_list(title, cards);
+			obj_list.push(card_obj);
+			
+		});
 
-		"List2" : {
-
-			"title" : '',
-			"order" : 1,
-			"cards" : ["todo 1", "todo 2", "todo3"]
-		}
+		localStorage.setItem("obj_list", JSON.stringify(obj_list));
+		var x = JSON.parse(localStorage.getItem("obj_list"));
+		console.log(x);
 	}
-	*/
+
+
+
 
 
 
 });
+
+
+
+
+
+
+
+
+
+
 
