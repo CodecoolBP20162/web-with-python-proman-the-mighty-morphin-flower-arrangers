@@ -3,7 +3,20 @@ $( document ).ready(function() {
 
 
 
-    var board = "<a href='/card'><div class='board'><div class='board_header'><p id='title'>Title</p></div><div class='board_content' id='board_content'></div> <p class='add_task' id='team'>Team</p></div></a>";
+    var board = `<div class='board'>  
+                 <div class='board_header'>
+                    <p id='title' contenteditable='true' onclick='$(this).focus();'>Title</p>
+                </div>
+                <div class='board_content' id='board_content'>
+                </div>      
+                   <label for="inputTeam" class="sr-only">Team</label> 
+                    <select  class="btn btn-primary btn-block select_field" name="inputTeam">
+                        <option class="btn btn btn-default btn-block" >The_MMFA</option>      
+                    </select>               
+                   </label>  
+                <a href='{{url_for("index")}}'>
+                    <option class="btn btn btn-default">Create</option>                          
+            </div>`;
 
 
 
