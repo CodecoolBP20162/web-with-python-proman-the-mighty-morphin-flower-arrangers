@@ -1,108 +1,126 @@
 
-$(document).ready(function () {
-    $(".initial").show(300);
+$( document ).ready(function() {
+	
+	var card = "<div class='card'><div class='card_header'><p class='title'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
 
+	// ADD NEW CARD TO LIST
+	$(document.body).on("click", ".add_task", function(e){
+		var $x = $(e.target);
+		$list = $x.prev();
+		var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).focus();'>task " + Math.floor((Math.random() * 10) + 1) + "</p></div>"
+		$list.append(new_item);
+		save_cards();
+		
+	})
 
-    var ListNames = []
+	// ADD NEW LIST TO BOARD
+	$(".create_new").click(function(){
+		$(".row").append(card);
+		save_cards();
+	})
 
+	
 
-    var card = "<div class='card'><div class='card_header'><p id='todo'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
+	// dragula([document.querySelector('.card_content')], { staticClass: 'static', animation: 300 })
+	// .on('drop', function(){
+	// 	save_cards();
+	// });
 
-    $(document.body).on("click", ".add_task", function (e) {
-        var $x = $(e.target);
-        console.log($x.parent());
-        $list = $x.prev();
-        console.log($list);
-        $list.append("<div class='task'>" + Math.floor((Math.random() * 10) + 1) + "</div>");
-    })
-
-
-    $(".create_new").click(function () {
-        $(".row").append(card);
-        //save();
-    })
-
-    dragula([document.querySelector('.card_content')], { staticClass: 'static', animation: 300 });
-
-
-	/*
-	var cards = []
-	function save(){
-		$(".card").each(function(){
-			cards.push($(this).html());
-			console.log(cards);
-		});
+	// CARD OBJECT
+	function proman_list(title, cards, board_name){
+		this.title = title;
+		this.cards = cards;
+		this.board_name = board_name;
 	}
-	*/
 
+	// SAVING ALL INFORMATION TO LOCALSTORAGE
+	function save_cards(){
 
-    function proman_list(id, title, order, cards) {
-        this.id = id;
-        this.title = title;
-        this.order = order;
-        this.cards = cards;
+		var obj_list = [];
 
-        this.save_as_json = function (name) {
-            localStorage.setItem(name, JSON.stringify(this));
-            ListNames.push(name);
-            console.log(ListNames);
-        }
-    }
+		$(".card").each(function(){
+			var cards = [];
+			var title = $(this).find(".title").text();
+			var board_name = $(this).attr("data-board_name");
+			$(this).find(".task").each(function(){
+				cards.push($(this).text());
+			});
 
-    function board(title) {
-        this.title = title
+			var card_obj = new proman_list(title, cards, board_name);
+			obj_list.push(card_obj);
+			// console.log(title);
+			
+		});
 
-        this.save_as_json = function (name) {
-            localStorage.setItem(name, JSON.stringify(this));
-        }
-    }
+		localStorage.setItem("obj_list", JSON.stringify(obj_list));
+		var x = JSON.parse(localStorage.getItem("obj_list"));
+		console.log(x);
+	}
 
-
-
-    var List1 = new proman_list("list1", "asd", 1, ["todo1", "todo2", "todo3"]);
-    localStorage.setItem("List1", JSON.stringify(List1));
-    var list1 = JSON.parse(localStorage.getItem("List1"));
-    List1.save_as_json("list1");
-    var list_obj = [];
-    list_obj.push(List1);
-    localStorage.setItem("obj_list", JSON.stringify(list_obj));
-
-    var getCards = function () {
+	// RETRIEVE LISTS
+	var getLists = function () {
         var data = JSON.parse(localStorage.getItem("obj_list"));
         console.log(data);
         for (var i = 0; i < data.length; i++) {
             var obj = data[i];
             var title = obj.title;
             var cards = obj.cards;
+            var board_name = obj.board_name;
             console.log(title, cards);
-            var card = "<div class='card'><div class='card_header'><p id='todo'>" + title + "</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
-            $(".row").append(card);
+            var prom_list = "<div class='card'><div class='card_header'><p id='task'>" + title + "</p></div><div class='card_content' id='card_content'></div>";
+            for (var j = 0; j < cards.length; j++) {
+                prom_list += "<div class='task' id='task'><p>" + cards[j] + "</p></div>";
+            }
+            prom_list += "<p class='add_task' id='add_task'>add task</p></div>";
+            if(board_name === "Welcome Board"){
+            	$(".row").append(prom_list);	
+            }
         }
 
     }
 
-});
-	/*
-	var Lists = {
+	// SAVING TO LOCALSTORAGE AFTER EDITING
+	$("p").focusout(function(){
+		save_cards();
+	})
 
-		"List1" : {
 
-			"title" : '',
-			"order" : 1,
-			"cards" : ["todo 1", "todo 2", "todo3"]
-		},
-
-		"List2" : {
-
-			"title" : '',
-			"order" : 1,
-			"cards" : ["todo 1", "todo 2", "todo3"]
+	var y = JSON.parse(localStorage.getItem("obj_list"));
+	for(var key in y){
+		if(key.board_name === "asd") {
+			console.log("SUCCESS");
 		}
+	};
+
+	var deleteStorage = function(){
+		localStorage.setItem("obj_list", JSON.stringify(""));
 	}
-	*/
 
 
+	$(".delete").click(function(){
+		deleteStorage();
+	})
 
+	getLists();
 
+	// MAKE CARDS DRAGGABLE
+	var drake = dragula({
+		isContainer: function (el) {
+			return el.classList.contains('card_content');
+		}}).on('drop', function(){
+				save_cards();
+			});
+
+	var drake2 = dragula({
+		isContainer: function (el) {
+			return el.classList.contains('row');
+		},
+		moves: function (el, container, handle) {
+			return handle.classList.contains('handle');
+		}}).on('drop', function(){
+				save_cards();
+			});
+
+});
 
 
