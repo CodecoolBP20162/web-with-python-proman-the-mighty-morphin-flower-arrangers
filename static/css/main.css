@@ -21,6 +21,10 @@ body {
 	margin: 0;
 }
 
+a {
+	text-decoration: none;
+}
+
 .the_mmf {
 	margin: 0;
 	font-family: 'hensa';

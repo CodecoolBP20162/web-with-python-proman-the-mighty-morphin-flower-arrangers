@@ -11,10 +11,8 @@ $( document ).ready(function() {
                                 
                  </div>       
                 <div> 
-                <a href='/card'>
-                    <option class="btn btn btn-default">Create/Edit</option>                          
-            </div>
-            </a>`;
+                <span>Please edit your title first</span>                       
+            </div>`;
 
     var saveBoard = function() {
         var boardsList = [];
@@ -43,10 +41,11 @@ $( document ).ready(function() {
                                 
                  </div>       
                 <div> 
-                <a href='/card'>
-                    <option class="btn btn btn-default">Create/Edit</option>                          
-            </div>
-            </a>`);
+                <form method="POST">
+                    <input type="text" name="ttle" value="`+boardsList[i]+`" style="display: none;">
+                    <input type="submit" name="" value="Create/Edit">
+                </form>                        
+            </div>`);
         }
     }
 
@@ -66,11 +65,19 @@ $( document ).ready(function() {
 
     $(".delete").click(function(){
         deleteBoard();
+        location.reload();
     });
 
     $(".save").click(function () {
         saveBoard();
         console.log("saved");
+        location.reload();
+    });
+
+    $(document).on("focusout", "p", function(){
+        saveBoard();
+        console.log("saved");
+        location.reload();
     });
 })   
 
