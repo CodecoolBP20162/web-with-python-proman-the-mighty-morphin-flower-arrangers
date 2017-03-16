@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def homepage():
-    return render_template('homepage.html')
+def board():
+    return render_template('board.html')
 
 @app.route('/card')
 def index():
