@@ -41,7 +41,9 @@ $( document ).ready(function() {
                                 
                  </div>       
                 <div> 
-                <a href="/cards?title=`+boardsList[i]+`">submit</a>
+                <div class="submit_div">
+                    <a href="/cards?title=`+boardsList[i]+`" class="submit">open</a>
+                </div>
 
             </div>`);
         }

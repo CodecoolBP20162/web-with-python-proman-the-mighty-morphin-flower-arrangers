@@ -15,7 +15,7 @@ var board_title = getBoardNameFromUrl();
 $(document.body).on("click", ".add_task", function (e) {
     var $x = $(e.target);
     $list = $x.prev();
-    var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).focus();'>task " + Math.floor((Math.random() * 10) + 1) + "</p></div>"
+    var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).focus();'>click to edit</p></div>"
     $list.append(new_item);
     save_lists();
 
@@ -168,9 +168,11 @@ var drake2 = dragula({
     moves: function (el, container, handle) {
         return handle.classList.contains('handle');
     },
-}).on('drop', function () {
-    save_lists();
-});
+    removeOnSpill: true
+})
+
+drake2.on('drop', function () { save_lists(); });
+drake2.on('remove', function () {save_lists(); });
 
 // SAVING TO LOCALSTORAGE AFTER EDITING
 $(document).on("focusout", "p", function () {
