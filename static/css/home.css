@@ -1,9 +1,36 @@
+@font-face {
+    font-family: 'hensa';
+    src: url("Hensa.otf");
+}
+
 body {
 	background: #f5f5f5;
+	padding-top: 0px;
 }
 
 .container {
 
+}
+
+.the_mmf {
+	margin: 0;
+	font-family: 'hensa';
+	font-size: 2em;
+	color: rgba(68,108,179, 1);
+
+}
+
+.nav {
+	margin: 0;
+	padding-left: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background: #fff;
+	box-shadow: 0px 2px 3px 1px #e3e3e3;
 }
 
 .row {

@@ -6,30 +6,21 @@
  
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    
     <script src="static/js/home.js"></script>
 <body>
-    <div align=center>
-	    <h3 class="text-muted">The Mighty Morphin Flower Arrangers</h3>
-    </div>    
-    <div class="container">
+    <div class="nav">
 		
+		<p class="the_mmf">Proman</p>
+		
+	</div>
+    <div class="container">		
 		<div class="row">
-            <div class='board'>
-                <div class='board_header'>
-                    <p id='title' contenteditable='true' onclick='$(this).focus();'>Title</p>
-                </div>
-                <div class='board_content' id='board_content'>
-                </div>
-                <div>      
-                    <option class="btn btn btn-default">The_MMFA_Team</option>
-                                
-                 </div>       
-                <a href='{{url_for("index")}}'>
-                    <option class="btn btn btn-default">Create/Edit</option>                          
-            </div>
-            </a>
-			<div class="board">
+           
+			<div class="boardaws">
 				<div class="board_header">  
                     <div class="create_new">
                         <p id="create">Create New Board</p>
@@ -41,7 +32,9 @@
             <p>&copy; Company 2017</p>
           </footer>
         <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script>
-    </div>   
+    </div> 
+    <button class="save">SAVE</button>
+    <button class="delete">DELETE</button>  
    </body>              
 
         
