@@ -1,8 +1,5 @@
 
 
-
-var card = "<div class='card'><div class='card_header'><p class='title'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
-
 // ADD NEW CARD TO LIST
 $(document.body).on("click", ".add_task", function (e) {
     var $x = $(e.target);
@@ -15,7 +12,17 @@ $(document.body).on("click", ".add_task", function (e) {
 
 // ADD NEW LIST TO BOARD
 $(".create_new").click(function () {
-    $(".row").append(card);
+    var board_title = $(".board_title").text();
+    $(".row").append(`<div class="card" data-board_name="`+ board_title +`">
+                <div class="card_header">
+                    <span class="circle"></span>
+                    <p class="title" id="editable" contenteditable>New</p>
+                    <i class="fa fa-arrows handle" aria-hidden="true"></i>
+                </div>
+                <div class="card_content drag_container" id="card_content">
+                </div>
+                <p class="add_task initial" id="add_task">add task ...</p>
+            </div>`);
     save_lists();
 })
 
@@ -139,6 +146,7 @@ var deleteStorage = function () {
 
 $(".delete").click(function () {
     deleteStorage();
+    console.log("deleted");
 })
 
 getLists();
@@ -167,7 +175,7 @@ var drake2 = dragula({
 
 // SAVING TO LOCALSTORAGE AFTER EDITING
 
-$("body").click(function () {
+$(document).on("focusout", "p", function () {
     save_lists();
     console.log("focus out");
 })

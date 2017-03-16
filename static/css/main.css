@@ -86,7 +86,7 @@ body {
 }
 
 .fa-stack {
-	animation: float 3000ms ease-in-out infinite;
+	/*animation: float 3000ms ease-in-out infinite;*/
 }
 
 .board_header {
