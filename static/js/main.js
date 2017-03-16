@@ -45,9 +45,10 @@ $( document ).ready(function() {
 	// });
 
 	// CARD OBJECT
-	function proman_list(title, cards){
+	function proman_list(title, cards, board_name){
 		this.title = title;
 		this.cards = cards;
+		this.board_name = board_name;
 	}
 
 	// SAVING ALL INFORMATION TO LOCALSTORAGE
@@ -58,11 +59,12 @@ $( document ).ready(function() {
 		$(".card").each(function(){
 			var cards = [];
 			var title = $(this).find(".title").text();
+			var board_name = $(this).attr("data-board_name");
 			$(this).find(".task").each(function(){
 				cards.push($(this).text());
 			});
 
-			var card_obj = new proman_list(title, cards);
+			var card_obj = new proman_list(title, cards, board_name);
 			obj_list.push(card_obj);
 			// console.log(title);
 			
@@ -79,6 +81,12 @@ $( document ).ready(function() {
 	})
 
 
+	var y = JSON.parse(localStorage.getItem("obj_list"));
+	for(var key in y){
+		if(key.board_name === "asd") {
+			console.log("SUCCESS");
+		}
+	}
 
 
 });
