@@ -1,6 +1,15 @@
 
+// RETRIEVE BOARD TITLE FROM URL
+var getBoardNameFromUrl = function(){
+    var urlParams = new URLSearchParams(window.location.search);
+    var url_title = urlParams.get('title');
+    $(".board_title").text(url_title);
+    return url_title;
+}
 
-var board_title = $(".board_title").text();
+// SET BOARD TITLE
+var board_title = getBoardNameFromUrl();
+
 
 // ADD NEW CARD TO LIST
 $(document.body).on("click", ".add_task", function (e) {
@@ -73,12 +82,10 @@ function save_lists() {
 
 
     localStorage.setItem(board_title, JSON.stringify(obj_list));
-    console.log("saved");
-    var x = JSON.parse(localStorage.getItem(board_title));
-    console.log(x);
 }
 
 
+// RETRIEVE LISTS FROM LOCAL STORAGE
 var generate_from_local = function(){
     var data = JSON.parse(localStorage.getItem(board_title));
     for (var i = 0; i < data.length; i++) {
@@ -107,7 +114,7 @@ var generate_from_local = function(){
         }
 }
 
-// RETRIEVE LISTS
+// CHECK FOR EMPTY BOARDS
 var getLists = function () {
     var data = JSON.parse(localStorage.getItem(board_title));
     console.log(data);
@@ -130,7 +137,7 @@ var getLists = function () {
     }
 }
 
-
+// DELETE STORAGE FOR DEVELOPMENT PURPOSES
 var deleteStorage = function () {
     localStorage.setItem(board_title, JSON.stringify(""));
 }
@@ -165,10 +172,7 @@ var drake2 = dragula({
     save_lists();
 });
 
-
-
 // SAVING TO LOCALSTORAGE AFTER EDITING
-
 $(document).on("focusout", "p", function () {
     save_lists();
     console.log("focus out");
