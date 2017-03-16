@@ -1,5 +1,7 @@
 
 
+var board_title = $(".board_title").text();
+
 // ADD NEW CARD TO LIST
 $(document.body).on("click", ".add_task", function (e) {
     var $x = $(e.target);
@@ -12,7 +14,6 @@ $(document.body).on("click", ".add_task", function (e) {
 
 // ADD NEW LIST TO BOARD
 $(".create_new").click(function () {
-    var board_title = $(".board_title").text();
     $(".row").append(`<div class="card" data-board_name="`+ board_title +`">
                 <div class="card_header">
                     <span class="circle"></span>
@@ -29,7 +30,6 @@ $(".create_new").click(function () {
 // ADD DEFAULT LISTS
 var add_default = function(){
     var title_list = ["New", "In progress", "Review", "Done"];
-    var board_title = $(".board_title").text();
     for(var i = 0; i < title_list.length; i++) {
         $(".row").append(`<div class="card" data-board_name="`+ board_title +`">
                 <div class="card_header">
@@ -71,15 +71,16 @@ function save_lists() {
 
     });
 
-    localStorage.setItem("obj_list", JSON.stringify(obj_list));
-    var x = JSON.parse(localStorage.getItem("obj_list"));
+
+    localStorage.setItem(board_title, JSON.stringify(obj_list));
+    console.log("saved");
+    var x = JSON.parse(localStorage.getItem(board_title));
     console.log(x);
 }
 
 
 var generate_from_local = function(){
-    var data = JSON.parse(localStorage.getItem("obj_list"));
-    var board_title = $(".board_title").text();
+    var data = JSON.parse(localStorage.getItem(board_title));
     for (var i = 0; i < data.length; i++) {
             var obj = data[i];
             var title = obj.title;
@@ -87,7 +88,7 @@ var generate_from_local = function(){
             console.log(cards);
             var board_name = obj.board_name;
             console.log(title, cards);
-            var prom_list = `<div class="card" data-board_name="Welcome Board">
+            var prom_list = `<div class="card" data-board_name="`+ board_title +`">
                     <div class="card_header">
                         <span class="circle"></span>
                         <p class="title" id="editable" contenteditable>`+ title + `</p>
@@ -108,13 +109,11 @@ var generate_from_local = function(){
 
 // RETRIEVE LISTS
 var getLists = function () {
-    var data = JSON.parse(localStorage.getItem("obj_list"));
+    var data = JSON.parse(localStorage.getItem(board_title));
     console.log(data);
-    var board_title = $(".board_title").text();
-    if(data.length < 1){
+    if(data === null || data === ""){
         add_default();
-    }
-
+    }else{
 
     for(var i=0; i<data.length; i++){
         if(data[i].board_name === board_title){
@@ -128,19 +127,12 @@ var getLists = function () {
         }
     }
 
+    }
 }
 
 
-
-var y = JSON.parse(localStorage.getItem("obj_list"));
-for (var key in y) {
-    if (key.board_name === "asd") {
-        console.log("SUCCESS");
-    }
-};
-
 var deleteStorage = function () {
-    localStorage.setItem("obj_list", JSON.stringify(""));
+    localStorage.setItem(board_title, JSON.stringify(""));
 }
 
 
