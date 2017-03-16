@@ -1,6 +1,5 @@
 
 $( document ).ready(function() {
-
 	
 	var card = "<div class='card'><div class='card_header'><p class='title'>To do</p></div><div class='card_content' id='card_content'></div> <p class='add_task' id='add_task'>add task</p></div>";
 
@@ -20,24 +19,7 @@ $( document ).ready(function() {
 		save_cards();
 	})
 
-	// MAKE CARDS DRAGGABLE
-
-	var drake = dragula({
-		isContainer: function (el) {
-			return el.classList.contains('card_content');
-		}}).on('drop', function(){
-				save_cards();
-			});
-
-	var drake2 = dragula({
-		isContainer: function (el) {
-			return el.classList.contains('row');
-		},
-		moves: function (el, container, handle) {
-			return handle.classList.contains('handle');
-		}}).on('drop', function(){
-				save_cards();
-			});
+	
 
 	// dragula([document.querySelector('.card_content')], { staticClass: 'static', animation: 300 })
 	// .on('drop', function(){
@@ -75,6 +57,28 @@ $( document ).ready(function() {
 		console.log(x);
 	}
 
+	// RETRIEVE LISTS
+	var getLists = function () {
+        var data = JSON.parse(localStorage.getItem("obj_list"));
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            var title = obj.title;
+            var cards = obj.cards;
+            var board_name = obj.board_name;
+            console.log(title, cards);
+            var prom_list = "<div class='card'><div class='card_header'><p id='task'>" + title + "</p></div><div class='card_content' id='card_content'></div>";
+            for (var j = 0; j < cards.length; j++) {
+                prom_list += "<div class='task' id='task'><p>" + cards[j] + "</p></div>";
+            }
+            prom_list += "<p class='add_task' id='add_task'>add task</p></div>";
+            if(board_name === "Welcome Board"){
+            	$(".row").append(prom_list);	
+            }
+        }
+
+    }
+
 	// SAVING TO LOCALSTORAGE AFTER EDITING
 	$("p").focusout(function(){
 		save_cards();
@@ -86,8 +90,36 @@ $( document ).ready(function() {
 		if(key.board_name === "asd") {
 			console.log("SUCCESS");
 		}
+	};
+
+	var deleteStorage = function(){
+		localStorage.setItem("obj_list", JSON.stringify(""));
 	}
 
+
+	$(".delete").click(function(){
+		deleteStorage();
+	})
+
+	getLists();
+
+	// MAKE CARDS DRAGGABLE
+	var drake = dragula({
+		isContainer: function (el) {
+			return el.classList.contains('card_content');
+		}}).on('drop', function(){
+				save_cards();
+			});
+
+	var drake2 = dragula({
+		isContainer: function (el) {
+			return el.classList.contains('row');
+		},
+		moves: function (el, container, handle) {
+			return handle.classList.contains('handle');
+		}}).on('drop', function(){
+				save_cards();
+			});
 
 });
 
