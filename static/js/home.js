@@ -41,10 +41,10 @@ $( document ).ready(function() {
                                 
                  </div>       
                 <div> 
-                <form method="POST">
-                    <input type="text" name="ttle" value="`+boardsList[i]+`" style="display: none;">
-                    <input type="submit" name="" value="Create/Edit">
-                </form>                        
+                <div class="submit_div">
+                    <a href="/cards?title=`+boardsList[i]+`" class="submit">open</a>
+                </div>
+
             </div>`);
         }
     }
@@ -59,6 +59,7 @@ $( document ).ready(function() {
         saveBoard();
         //save();
     })
+    
     dragula([document.querySelector('.row')], { staticClass: 'static', animation: 300 });
 
     getBoard();

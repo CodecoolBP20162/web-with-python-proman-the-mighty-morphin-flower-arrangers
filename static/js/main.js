@@ -1,12 +1,21 @@
 
+// RETRIEVE BOARD TITLE FROM URL
+var getBoardNameFromUrl = function(){
+    var urlParams = new URLSearchParams(window.location.search);
+    var url_title = urlParams.get('title');
+    $(".board_title").text(url_title);
+    return url_title;
+}
 
-var board_title = $(".board_title").text();
+// SET BOARD TITLE
+var board_title = getBoardNameFromUrl();
+
 
 // ADD NEW CARD TO LIST
 $(document.body).on("click", ".add_task", function (e) {
     var $x = $(e.target);
     $list = $x.prev();
-    var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).focus();'>task " + Math.floor((Math.random() * 10) + 1) + "</p></div>"
+    var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).focus();'>click to edit</p></div>"
     $list.append(new_item);
     save_lists();
 
@@ -73,12 +82,10 @@ function save_lists() {
 
 
     localStorage.setItem(board_title, JSON.stringify(obj_list));
-    console.log("saved");
-    var x = JSON.parse(localStorage.getItem(board_title));
-    console.log(x);
 }
 
 
+// RETRIEVE LISTS FROM LOCAL STORAGE
 var generate_from_local = function(){
     var data = JSON.parse(localStorage.getItem(board_title));
     for (var i = 0; i < data.length; i++) {
@@ -107,7 +114,7 @@ var generate_from_local = function(){
         }
 }
 
-// RETRIEVE LISTS
+// CHECK FOR EMPTY BOARDS
 var getLists = function () {
     var data = JSON.parse(localStorage.getItem(board_title));
     console.log(data);
@@ -130,7 +137,7 @@ var getLists = function () {
     }
 }
 
-
+// DELETE STORAGE FOR DEVELOPMENT PURPOSES
 var deleteStorage = function () {
     localStorage.setItem(board_title, JSON.stringify(""));
 }
@@ -147,10 +154,12 @@ getLists();
 var drake = dragula({
     isContainer: function (el) {
         return el.classList.contains('card_content');
-    }
-}).on('drop', function () {
-    save_lists();
-});
+    },
+    removeOnSpill: true
+})
+
+drake.on('drop', function () {save_lists(); });
+drake.on('remove', function () {save_lists(); });
 
 var drake2 = dragula({
     isContainer: function (el) {
@@ -158,15 +167,14 @@ var drake2 = dragula({
     },
     moves: function (el, container, handle) {
         return handle.classList.contains('handle');
-    }
-}).on('drop', function () {
-    save_lists();
-});
+    },
+    removeOnSpill: true
+})
 
-
+drake2.on('drop', function () { save_lists(); });
+drake2.on('remove', function () {save_lists(); });
 
 // SAVING TO LOCALSTORAGE AFTER EDITING
-
 $(document).on("focusout", "p", function () {
     save_lists();
     console.log("focus out");
