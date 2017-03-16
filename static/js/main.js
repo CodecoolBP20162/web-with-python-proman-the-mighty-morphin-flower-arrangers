@@ -147,10 +147,12 @@ getLists();
 var drake = dragula({
     isContainer: function (el) {
         return el.classList.contains('card_content');
-    }
-}).on('drop', function () {
-    save_lists();
-});
+    },
+    removeOnSpill: true
+})
+
+drake.on('drop', function () {save_lists(); });
+drake.on('remove', function () {save_lists(); });
 
 var drake2 = dragula({
     isContainer: function (el) {
@@ -158,7 +160,7 @@ var drake2 = dragula({
     },
     moves: function (el, container, handle) {
         return handle.classList.contains('handle');
-    }
+    },
 }).on('drop', function () {
     save_lists();
 });
