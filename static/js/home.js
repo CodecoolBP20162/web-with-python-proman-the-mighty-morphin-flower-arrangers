@@ -15,7 +15,7 @@ $( document ).ready(function() {
                  </div>       
                 <div> 
                 <a href='/card'>
-                    <option class="btn btn btn-default">Create</option>                          
+                    <option class="btn btn btn-default">Create/Edit</option>                          
             </div>
             </a>`;
 
