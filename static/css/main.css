@@ -85,8 +85,8 @@ body {
 	text-shadow: 2px 2px 20px rgba(68,108,179, 0.6);
 }
 
-.fa-stack {
-	animation: float 3000ms ease-in-out infinite;
+.fa-stack:hover {
+	animation: shake 200ms ease-in-out;
 }
 
 .board_header {
