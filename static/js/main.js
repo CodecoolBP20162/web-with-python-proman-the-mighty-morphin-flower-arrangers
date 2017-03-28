@@ -15,7 +15,7 @@ var board_title = getBoardNameFromUrl();
 $(document.body).on("click", ".add_task", function (e) {
     var $x = $(e.target);
     $list = $x.prev();
-    var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).focus();'>click to edit</p></div>"
+    var new_item = "<div class='task'> <p contenteditable='true'; onclick='$(this).selectText();'>click to edit</p></div>"
     $list.append(new_item);
     save_lists();
 
@@ -26,7 +26,7 @@ $(".create_new").click(function () {
     $(".row").append(`<div class="card" data-board_name="`+ board_title +`">
                 <div class="card_header">
                     <span class="circle"></span>
-                    <p class="title" id="editable" contenteditable>New</p>
+                    <p class="title" id="editable" contenteditable="true"; onclick="$(this).selectText();">New</p>
                     <i class="fa fa-arrows handle" aria-hidden="true"></i>
                 </div>
                 <div class="card_content drag_container" id="card_content">
@@ -43,7 +43,7 @@ var add_default = function(){
         $(".row").append(`<div class="card" data-board_name="`+ board_title +`">
                 <div class="card_header">
                     <span class="circle"></span>
-                    <p class="title" id="editable" contenteditable>`+ title_list[i] +`</p>
+                    <p class="title" id="editable" contenteditable="true"; onclick='$(this).selectText();>`+ title_list[i] +`</p>
                     <i class="fa fa-arrows handle" aria-hidden="true"></i>
                 </div>
                 <div class="card_content drag_container" id="card_content">
@@ -61,13 +61,24 @@ function proman_list(title, cards, board_name) {
     this.board_name = board_name;
 }
 
+Array.prototype.filter = function(first_argument) {
+    // body...
+};
+
+var a = {
+    asd: function(){
+        console.log("asd");
+    },
+    fgd: 5
+}
+
 // SAVING ALL INFORMATION TO LOCALSTORAGE
 function save_lists() {
 
     var obj_list = [];
 
     $(".card").each(function () {
-        var cards = [];
+        var cards = new Array;
         var title = $(this).find(".title").text();
         var board_name = $(this).attr("data-board_name");
         $(this).find(".task").each(function () {
@@ -82,14 +93,19 @@ function save_lists() {
 
 
     localStorage.setItem(board_title, JSON.stringify(obj_list));
+    sendCardData(JSON.stringify(obj_list));
 }
 
 
 // RETRIEVE LISTS FROM LOCAL STORAGE
 var generate_from_local = function(){
+
+   'use strict';
+    
     var data = JSON.parse(localStorage.getItem(board_title));
+    var obj = null;
     for (var i = 0; i < data.length; i++) {
-            var obj = data[i];
+            obj = data[i];
             var title = obj.title;
             var cards = obj.cards;
             console.log(cards);
@@ -98,12 +114,12 @@ var generate_from_local = function(){
             var prom_list = `<div class="card" data-board_name="`+ board_title +`">
                     <div class="card_header">
                         <span class="circle"></span>
-                        <p class="title" id="editable" contenteditable>`+ title + `</p>
+                        <p class="title" id="editable" contenteditable="true"; onclick="$(this).selectText();">`+ title + `</p>
                         <i class="fa fa-arrows handle" aria-hidden="true"></i>
                     </div>`;
             prom_list += `<div class="card_content drag_container" id="card_content">`;
             for (var j = 0; j < cards.length; j++) {
-                prom_list += '<div class="task"> <p contenteditable="true"; onclick="$(this).focus();">' + cards[j] + '</p></div>';
+                prom_list += '<div class="task"> <p contenteditable="true"; onclick="$(this).selectText();">' + cards[j] + '</p></div>';
             }
             prom_list += `</div>`
             prom_list += `<p class="add_task initial" id="add_task">add task ...</p>
@@ -138,7 +154,7 @@ var getLists = function () {
 }
 
 // DELETE STORAGE FOR DEVELOPMENT PURPOSES
-var deleteStorage = function () {
+var deleteStorage = (e) => {
     localStorage.setItem(board_title, JSON.stringify(""));
 }
 
@@ -179,6 +195,46 @@ $(document).on("focusout", "p", function () {
     save_lists();
     console.log("focus out");
 })
+
+$.fn.selectText = function(){
+    var doc = document;
+    var element = this[0];
+    //console.log(this, element);
+    if (doc.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();        
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+};
+
+
+// ##### D A T A B A S E ##### 
+
+var sendCardData = function(data) {
+    var request = new XMLHttpRequest();
+    request.open("POST", "/api?action=saveCards&asd=haha");
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    request.send(JSON.stringify(data));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
