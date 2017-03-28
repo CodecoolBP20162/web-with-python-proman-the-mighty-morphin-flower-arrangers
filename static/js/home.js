@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+jQuery( document ).ready(function($) {
 
     var board = `<div class='board'>
                 <div class='board_header'>
@@ -23,12 +23,13 @@ $( document ).ready(function() {
         });
         localStorage.setItem('boards',JSON.stringify(boardsList));
         console.log(JSON.parse(localStorage.getItem('boards')));
+        sendBoardData(JSON.stringify(boardsList));
     }        
 
 
     var getBoard = function() {
         var boardsList = JSON.parse(localStorage.getItem('boards'));
-        console.log(boardsList);
+        // console.log(boardsList);
         for (var i = 0; i<boardsList.length;i++) {
             $(".row").append(`<div class='board'>
                 <div class='board_header'>
@@ -80,6 +81,13 @@ $( document ).ready(function() {
         console.log("saved");
         location.reload();
     });
+
+    var sendBoardData = function(data) {
+        var request = new XMLHttpRequest();
+        request.open("POST", "/api?action=saveBoard&asd=haha");
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send(JSON.stringify(data));
+    }
 })   
 
 
