@@ -43,9 +43,14 @@ def api():
 		cards_list = json.loads(data)
 		cards = Cards.select().where(Cards.board_name == related_board)
 		Cards.save_cards(cards_list, cards)
+	
 	elif action == "saveNewCard":
 		card_data = json.loads(request.json)
 		Cards.save_new_card(card_data)
+
+	elif action == "deleteBoard":
+		query = Cards.delete().where(Cards.board_name == data)
+		query.execute()
 	
 	return "success"
 
