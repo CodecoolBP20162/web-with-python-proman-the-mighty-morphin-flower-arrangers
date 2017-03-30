@@ -1,7 +1,5 @@
 var $sampleCard = $("#sample-card");
 // $("#sample-card").remove();
-$sampleCard.attr('data-board_name', "asd");
-$sampleCard.attr('data-order_id', "asd");
 
 
 // RETRIEVE BOARD TITLE FROM URL
@@ -29,17 +27,11 @@ $(document.body).on("click", ".add_task", function (e) {
 // ADD NEW LIST TO BOARD
 $(".create_new").click(function () {
     var newOrderNum = $row.children().length + 1;
+    var $newList = $sampleCard;
+    $newList.attr('data-board_name', board_title);
+    $newList.attr('data-order_id', board_title+"="+newOrderNum);
 
-    $(".row").append(`<div class="card" data-board_name="`+ board_title +`" data-order_id="`+ board_title +`-`+newOrderNum+`">
-                <div class="card_header">
-                    <span class="circle"></span>
-                    <p class="title" id="editable" contenteditable="true"; onclick="$(this).selectText();">New</p>
-                    <i class="fa fa-arrows handle" aria-hidden="true"></i>
-                </div>
-                <div class="card_content drag_container" id="card_content">
-                </div>
-                <p class="add_task initial" id="add_task">add task ...</p>
-            </div>`);
+    $(".row").append();
 
     var card_data = JSON.stringify({"board_name":board_title, "order_id":board_title+"-"+newOrderNum})
     sendNewCardData(card_data)

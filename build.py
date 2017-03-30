@@ -6,5 +6,5 @@ db.drop_table(Cards)
 db.create_table(Boards)
 db.create_table(Cards)
 
-# Boards.create()
+Boards.create(title="Boards", content=json.dumps(["board1"]))
 # Cards.create()
