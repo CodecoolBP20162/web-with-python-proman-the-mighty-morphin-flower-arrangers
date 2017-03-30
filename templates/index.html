@@ -33,13 +33,44 @@
 				</span>
 			</div>
 			<div>
-				<p class="board_title"></p>
+				<p class="board_title">{{ board_name }}</p>
 				<p class="board_subtitle">The Mighty Morphin Flower Arrangers</p>
 			</div>
 		</div>
 		
 		<div class="horizontal">
 			<div class="row">
+				{% if cards %}
+				{% for card in cards%}
+					<div class="card" data-board_name="{{ card.board_name }}" data-order_id="{{ card.order_id }}">
+		                <div class="card_header">
+		                    <span class="circle"></span>
+		                    <p class="title" id="editable" contenteditable="true" ;="" onclick="$(this).selectText();">{{ card.title }}</p>
+		                    <i class="fa fa-arrows handle" aria-hidden="true"></i>
+		                </div>
+		                <div class="card_content drag_container" id="card_content">
+		                	{% for item in card.content %}
+			                <div class="task"> <p contenteditable="true" ;="" onclick="$(this).selectText();">{{ item }}</p></div>
+		                	{% endfor %}
+		                </div>
+		                <p class="add_task initial" id="add_task">add task ...</p>
+		            </div>
+	            {% endfor %}
+				{% endif %}
+
+				{% if title_list %}
+					{% for i in range(title_list|length)%}
+						<div class="card" data-board_name="{{ board_name }}" data-order_id="{{board_name}}-{{i+1}}">
+			                <div class="card_header">
+			                    <span class="circle"></span>
+			                    <p class="title" id="editable" contenteditable="true" ;="" onclick="$(this).selectText();">{{ title_list[i] }}</p>
+			                    <i class="fa fa-arrows handle" aria-hidden="true"></i>
+			                </div>
+			                <div class="card_content drag_container" id="card_content"></div>
+			                <p class="add_task initial" id="add_task">add task ...</p>
+			            </div>
+					{% endfor %}
+				{% endif %}
 			</div> 
 		
 			<div class="create_new">
@@ -49,11 +80,19 @@
 
 
 	</div>
-	<button class="delete">DELETE</button>
+	<div class="card" id="sample-card" data-board_name="" data-order_id="">
+        <div class="card_header">
+            <span class="circle"></span>
+            <p class="title" id="editable" contenteditable="true"; onclick="$(this).selectText();">New</p>
+            <i class="fa fa-arrows handle" aria-hidden="true"></i>
+        </div>
+        <div class="card_content drag_container" id="card_content">
+        </div>
+        <p class="add_task initial" id="add_task">add task ...</p>
+    </div>
 
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script>
 	<script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 </body>
-<p contenteditable="true" onclick='$(this).focus();>asd</p>
 </html>
