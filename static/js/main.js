@@ -1,5 +1,5 @@
 var $sampleCard = $("#sample-card");
-// $("#sample-card").remove();
+$("#sample-card").remove();
 
 
 // RETRIEVE BOARD TITLE FROM URL
@@ -26,12 +26,14 @@ $(document.body).on("click", ".add_task", function (e) {
 
 // ADD NEW LIST TO BOARD
 $(".create_new").click(function () {
+    var $row = $(".row");
     var newOrderNum = $row.children().length + 1;
     var $newList = $sampleCard;
     $newList.attr('data-board_name', board_title);
-    $newList.attr('data-order_id', board_title+"="+newOrderNum);
+    $newList.attr('data-order_id', board_title+"-"+newOrderNum);
+    $newList.removeAttr('id');
 
-    $(".row").append();
+    $(".row").append($newList);
 
     var card_data = JSON.stringify({"board_name":board_title, "order_id":board_title+"-"+newOrderNum})
     sendNewCardData(card_data)
