@@ -11,29 +11,40 @@ def board():
 
 @app.route('/cards')
 def index2():
-    return render_template('index.html')    
+	board_name = request.args.get("title")
+	cards = Cards.select().where(Cards.board_name == board_name)
+	if cards:
+		for item in cards:
+			item.content = json.loads(item.content)
+		return render_template('index.html', cards=cards, board_name=board_name)    
+	else:
+		return redirect(url_for("default", title=board_name))
 
+@app.route('/default')
+def default():
+	board_name = request.args.get("title")
+	title_list = ["New", "In progress", "Review", "Done"]
+	return render_template("index.html", title_list=title_list, board_name=board_name)
 
 @app.route('/api', methods=["POST"])
 def api():
 	action = request.args.get("action")
+	related_board = request.args.get("related_board")
 	data = request.json
 	
 	if action == "saveBoard":
-		# SAVE BOARD DATA TO DATABASE
 		query = Boards.select().where(Boards.title == "Boards").get()
 		query.content = data
-		# boards_list = json.loads(query.content)
-		# print(boards_list)
 
 	elif action == "saveCards":
-		# SAVA CARD DATA TO DATABASE
 		cards_list = json.loads(data)
-		for i in range(len(cards_list)):
-			print(cards_list[i]["cards"])
+		cards = Cards.select().where(Cards.board_name == related_board)
+		Cards.save_cards(cards_list, cards)
+	elif action == "saveNewCard":
+		card_data = json.loads(request.json)
+		Cards.save_new_card(card_data)
 	
-	return redirect(url_for('board'))
-
+	return "success"
 
 @app.route('/build')
 def build():
@@ -46,3 +57,13 @@ def build():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
