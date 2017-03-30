@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def board():
-	return render_template('board.html')
+	query = Boards.select().where(Boards.title == "Boards").get()
+	board_list = json.loads(query.content)
+	return render_template('board.html', board_list=board_list)
 
 @app.route('/cards')
 def index2():
@@ -35,6 +37,7 @@ def api():
 	if action == "saveBoard":
 		query = Boards.select().where(Boards.title == "Boards").get()
 		query.content = data
+		query.save()
 
 	elif action == "saveCards":
 		cards_list = json.loads(data)

@@ -17,31 +17,26 @@
 		<p class="the_mmf">Proman</p>
 		
 	</div>
-    <div class="container">		
-		<div class="row">
-           
-			<div class="boardaws">
-				<div class="board_header">  
-                    <div class="create_new">
-                        <p id="create">Create New Board</p>
-                    </div>    
+    <div class="wrapper">		
+		<div class="wrap-row">
+
+            {% for board in board_list %}
+                <div class='board'>
+                    <div class='board_header'>
+                        <p id='title' contenteditable='true' onclick='$(this).selectText();'>{{ board }}</p>
+                    </div>
+                    <div class='board_content' id='board_content'>
+                        <a href="/cards?title={{board}}" class="link-btn">OPEN</a>
+                    </div>                       
                 </div>
-            </div>
-            <div class='board'>
-                <div class='board_header'>
-                    <p id='title' contenteditable='true' onclick='$(this).selectText();'>Title</p>
-                </div>
-                <div class='board_content' id='board_content'>
-                
-                </div>                       
-            </div>
+            {% endfor %}
+            
         </div>
         <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script>
+        <div class="create_container">
+            <div class="create_new">create new board</div>
+        </div>
     </div> 
-    <div align=center class="buttons"> 
-        <button class="save">SAVE</button>
-        <button class="delete">DELETE_ALL</button>
-    </div>
        <div align=center>     
         <footer class="footer">
             <p>&copy; The_MMFA_Company 2017</p>

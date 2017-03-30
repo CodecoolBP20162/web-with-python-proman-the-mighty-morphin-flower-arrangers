@@ -1,3 +1,8 @@
+var $sampleCard = $("#sample-card");
+// $("#sample-card").remove();
+$sampleCard.attr('data-board_name', "asd");
+$sampleCard.attr('data-order_id', "asd");
+
 
 // RETRIEVE BOARD TITLE FROM URL
 var getBoardNameFromUrl = function(){
@@ -23,8 +28,6 @@ $(document.body).on("click", ".add_task", function (e) {
 
 // ADD NEW LIST TO BOARD
 $(".create_new").click(function () {
-
-    var $row = $(".row");
     var newOrderNum = $row.children().length + 1;
 
     $(".row").append(`<div class="card" data-board_name="`+ board_title +`" data-order_id="`+ board_title +`-`+newOrderNum+`">
