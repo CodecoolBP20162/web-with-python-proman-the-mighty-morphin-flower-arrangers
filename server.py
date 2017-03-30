@@ -14,7 +14,7 @@ def board():
 @app.route('/cards')
 def index2():
 	board_name = request.args.get("title")
-	cards = Cards.select().where(Cards.board_name == board_name)
+	cards = Cards.select().where(Cards.board_name == board_name).order_by(Cards.id)
 	if cards:
 		for item in cards:
 			item.content = json.loads(item.content)
@@ -28,6 +28,7 @@ def default():
 	title_list = ["New", "In progress", "Review", "Done"]
 	return render_template("index.html", title_list=title_list, board_name=board_name)
 
+##### HANDLING AJAX REQUESTS #####
 @app.route('/api', methods=["POST"])
 def api():
 	action = request.args.get("action")
@@ -43,20 +44,20 @@ def api():
 		cards_list = json.loads(data)
 		cards = Cards.select().where(Cards.board_name == related_board)
 		Cards.save_cards(cards_list, cards)
+	
 	elif action == "saveNewCard":
 		card_data = json.loads(request.json)
 		Cards.save_new_card(card_data)
+
+	elif action == "deleteBoard":
+		query = Cards.delete().where(Cards.board_name == data)
+		query.execute()
+
+	elif action == "deleteCard":
+		query = Cards.delete().where(Cards.order_id == data)
+		query.execute()
 	
 	return "success"
-
-@app.route('/build')
-def build():
-	query = Boards.delete()
-	query.execute()
-	Boards.create(title="FirstBoard")
-	return redirect(url_for('board'))
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
