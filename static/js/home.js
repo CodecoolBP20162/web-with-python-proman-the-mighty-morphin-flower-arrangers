@@ -5,7 +5,7 @@ jQuery( document ).ready(function($) {
                         <p id='title' contenteditable='true' onclick='$(this).selectText();'>click to edit</p>
                     </div>
                     <div class='board_content' id='board_content'>
-                        <a href="/cards?title={{board}}" class="link-btn open-btn">OPEN</a>
+                        <a href="/cards?title={{board}}" class="link-btn open-btn">Open</a>
                         <a href="#" class="link-btn delete-btn">Delete</a>
                     </div>                       
                 </div>`

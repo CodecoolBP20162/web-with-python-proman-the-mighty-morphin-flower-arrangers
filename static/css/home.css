@@ -63,7 +63,9 @@ body {
 }
 
 .board_header {
-	padding-left: 5px;
+	display: flex;
+	justify-content: center;
+	margin-bottom: -10px;
 	font-weight: 700;
 	font-size: 1.3em;
 	cursor: text;
@@ -73,11 +75,12 @@ body {
 	display: flex;
 	flex-direction: column;
 	margin-top: 25px;
+	align-items: center;
 }
 
 .link-btn {
 	width: 100%;
-	background: rgba(68,108,179, 1);
+	background: rgba(68,108,179, 0.6);
 	color: #fff;
 	border-radius: 3px;
 	display: flex;
@@ -88,15 +91,22 @@ body {
 	cursor: pointer;
 }
 
-.link-btn:nth-child(2) {
+.delete-btn {
 	margin-top: 10px;
-	background: #b71c1c;
+	background: rgba(192, 57, 43, .6);
 }
 
 .link-btn:hover {
-	transform: scale(0.95);
 	text-decoration: none;
 	color: #fff;
+}
+
+.delete-btn:hover {
+	background: rgba(192, 57, 43, 1);
+}
+
+.open-btn:hover {
+	background: rgba(68,108,179, 1);
 }
 
 .create_container {
