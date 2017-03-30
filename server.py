@@ -14,7 +14,7 @@ def board():
 @app.route('/cards')
 def index2():
 	board_name = request.args.get("title")
-	cards = Cards.select().where(Cards.board_name == board_name)
+	cards = Cards.select().where(Cards.board_name == board_name).order_by(Cards.id)
 	if cards:
 		for item in cards:
 			item.content = json.loads(item.content)
