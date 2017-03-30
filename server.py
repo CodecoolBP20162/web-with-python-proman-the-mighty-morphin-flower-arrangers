@@ -28,6 +28,7 @@ def default():
 	title_list = ["New", "In progress", "Review", "Done"]
 	return render_template("index.html", title_list=title_list, board_name=board_name)
 
+##### HANDLING AJAX REQUESTS #####
 @app.route('/api', methods=["POST"])
 def api():
 	action = request.args.get("action")
@@ -51,17 +52,12 @@ def api():
 	elif action == "deleteBoard":
 		query = Cards.delete().where(Cards.board_name == data)
 		query.execute()
+
+	elif action == "deleteCard":
+		query = Cards.delete().where(Cards.order_id == data)
+		query.execute()
 	
 	return "success"
-
-@app.route('/build')
-def build():
-	query = Boards.delete()
-	query.execute()
-	Boards.create(title="FirstBoard")
-	return redirect(url_for('board'))
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

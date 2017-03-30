@@ -46,7 +46,7 @@
 		                <div class="card_header">
 		                    <span class="circle"></span>
 		                    <p class="title" id="editable" contenteditable="true" ;="" onclick="$(this).selectText();">{{ card.title }}</p>
-		                    <i class="fa fa-arrows handle" aria-hidden="true"></i>
+		                    <i class="fa fa-trash" aria-hidden="true"></i>
 		                </div>
 		                <div class="card_content drag_container" id="card_content">
 		                	{% for item in card.content %}
@@ -64,7 +64,7 @@
 			                <div class="card_header">
 			                    <span class="circle"></span>
 			                    <p class="title" id="editable" contenteditable="true" ;="" onclick="$(this).selectText();">{{ title_list[i] }}</p>
-			                    <i class="fa fa-arrows handle" aria-hidden="true"></i>
+			                    <i class="fa fa-trash" aria-hidden="true"></i>
 			                </div>
 			                <div class="card_content drag_container" id="card_content"></div>
 			                <p class="add_task initial" id="add_task">add task ...</p>
@@ -80,6 +80,7 @@
 
 
 	</div>
+	<!-- SAMPLE CARDS FOR JAVASCRIPT - DELETED ON PAGE LOAD -->
 	<div class="card" id="sample-card" data-board_name="" data-order_id="">
         <div class="card_header">
             <span class="circle"></span>
