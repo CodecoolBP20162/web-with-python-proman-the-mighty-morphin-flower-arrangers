@@ -43,7 +43,7 @@ var add_default = function(){
         $(".row").append(`<div class="card" data-board_name="`+ board_title +`">
                 <div class="card_header">
                     <span class="circle"></span>
-                    <p class="title" id="editable" contenteditable="true"; onclick='$(this).selectText();>`+ title_list[i] +`</p>
+                    <p class="title" id="editable" contenteditable="true"; onclick='$(this).selectText();'>`+ title_list[i] +`</p>
                     <i class="fa fa-arrows handle" aria-hidden="true"></i>
                 </div>
                 <div class="card_content drag_container" id="card_content">

@@ -23,6 +23,7 @@ def api():
 		# SAVE BOARD DATA TO DATABASE
 		query = Boards.select().where(Boards.title == "Boards").get()
 		query.content = data
+		query.save()
 		# boards_list = json.loads(query.content)
 		# print(boards_list)
 
@@ -33,6 +34,12 @@ def api():
 			print(cards_list[i]["cards"])
 	
 	return redirect(url_for('board'))
+
+@app.route('/boardapi' , methods=["POST"])
+def bapi():
+	action = request.args.get("action")
+	data = request.json
+
 
 
 @app.route('/build')

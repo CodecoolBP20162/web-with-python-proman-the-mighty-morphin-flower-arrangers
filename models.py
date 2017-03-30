@@ -1,7 +1,7 @@
 from peewee import *
 
 
-db = PostgresqlDatabase('robertgaspar', user='robertgaspar')
+db = PostgresqlDatabase('zahoranszky', user='zahoranszky')
 
 
 class BaseModel(Model):

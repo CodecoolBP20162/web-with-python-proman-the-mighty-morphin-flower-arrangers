@@ -1,19 +1,9 @@
-jQuery( document ).ready(function($) {
+$( document ).ready(function() {
 
-    var board = `<div class='board'>
-                <div class='board_header'>
-                    <p id='title' contenteditable='true' onclick='$(this).focus();'>Title</p>
-                </div>
-                <div class='board_content' id='board_content'>
-                </div>
-                <div>      
-                    <option class="btn btn btn-primary">The_MMFA_Team</option>
-                                
-                 </div>       
-                <div> 
-                <span>Please edit your title first</span>                       
-            </div>`;
-
+    var $board = $(document.getElementById("board_template"));
+    $board.hide();
+    var boardCounter = 0;
+    
     var saveBoard = function() {
         var boardsList = [];
         $('.board').each(function(){
@@ -23,13 +13,19 @@ jQuery( document ).ready(function($) {
         });
         localStorage.setItem('boards',JSON.stringify(boardsList));
         console.log(JSON.parse(localStorage.getItem('boards')));
-        sendBoardData(JSON.stringify(boardsList));
     }        
 
-
+    var BoardRequest = new XMLHttpRequest();
+    BoardRequest.open('GET' , "/boardapi?action=saveBoards")
+    BoardRequest.onload = function() {
+        var boardsList = JSON.parse(BoardRequest.responseText);
+        getBoard(boardsList);
+    }
+    BoardRequest.send();
+    
     var getBoard = function() {
         var boardsList = JSON.parse(localStorage.getItem('boards'));
-        // console.log(boardsList);
+        console.log(boardsList);
         for (var i = 0; i<boardsList.length;i++) {
             $(".row").append(`<div class='board'>
                 <div class='board_header'>
@@ -40,7 +36,7 @@ jQuery( document ).ready(function($) {
                 <div>      
                     <option class="btn btn btn-primary">The_MMFA_Team</option>
                                 
-                 </div>       
+                </div>       
                 <div> 
                 <div class="submit_div">
                     <a href="/cards?title=`+boardsList[i]+`" class="submit">open</a>
@@ -56,8 +52,11 @@ jQuery( document ).ready(function($) {
 
 
     $(".create_new").click(function(){
-        $(".row").append(board);
-        saveBoard();
+       // $(".row").append(board)
+       //$board.appendTo('.row');
+       $board.attr("id", "board" + (++boardCounter)).appendTo(".row").show();    
+       // $board.clone().attr("id", "board" + (++boardCounter)).appendTo(".row").show();
+       // saveBoard();
         //save();
     })
     
@@ -81,15 +80,4 @@ jQuery( document ).ready(function($) {
         console.log("saved");
         location.reload();
     });
-
-    var sendBoardData = function(data) {
-        var request = new XMLHttpRequest();
-        request.open("POST", "/api?action=saveBoard&asd=haha");
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        request.send(JSON.stringify(data));
-    }
 })   
-
-
-
-    
