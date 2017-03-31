@@ -2,7 +2,7 @@ from peewee import *
 import json
 
 
-db = PostgresqlDatabase('robertgaspar', user='robertgaspar')
+db = PostgresqlDatabase('zahoranszky', user='zahoranszky')
 
 
 # class BaseModel(Model):
